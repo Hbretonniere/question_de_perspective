@@ -34,9 +34,7 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
     im = np.flip(im, axis=1)
     size_x = np.shape(im)[0]  # Get the width and hight of the image for iterating over
     size_y = np.shape(im)[1]
-    list_cube = [[np.shape(im)[1]/13*4, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-
-    print(list_cube)
+    list_cube = [[np.shape(im)[1]/13*8, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
     size = 1
     # parcourt pixel de l'image reelle
     for x0 in range(0, size_x):
@@ -61,6 +59,6 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
 
 
 def make_movie(name, fps):
-    image_files = [img for img in sort_nicely(glob.glob('data/rendered/'+name+'*.png'))]
+    image_files = [img for img in sort_nicely(glob.glob('data/rendered/'+name+'/'+name+'*.png'))]
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
-    clip.write_videofile('data/rendered/'+name+'_video.mp4')
+    clip.write_videofile('data/rendered/'+name+'/'+name+'_video.mp4')

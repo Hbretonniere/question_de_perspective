@@ -1,3 +1,4 @@
+import os
 import csv
 import bpy
 import numpy as np
@@ -12,6 +13,8 @@ file = np.load("data/list_objects/list_cube_"+name+".npy", allow_pickle=True)
 # from normal scale to blender scale
 reduce = file[0][0]
 
+if not os.path.exists('data/rendered/'+name):
+    os.makedirs('data/rendered/'+name)
 
 print(reduce)
 for i in range(2, file.shape[0]):
@@ -21,7 +24,7 @@ for i in range(2, file.shape[0]):
     cube_i = bpy.context.selected_objects[0]
     cube_i.name = 'cube_{}'.format(i)
     color = tuple(reversed(tuple(file[i][4]/255)))+(1,)
-    cube_mat = bpy.data.materials.new("PKHG")
+    cube_mat = bpy.data.materials.new("RGB")
     cube_mat.diffuse_color = color
     cube_mat.roughness = 1
     cube_i.data.materials.append(cube_mat)
@@ -61,7 +64,7 @@ for i, angle in enumerate(np.linspace(np.pi+np.pi/6, 2*np.pi, nb_frames)):
     scene.camera.location.z = zs[i]
     scene.camera.location.y = y
     scene.camera.location.x = x
-    bpy.context.scene.render.filepath = './data/rendered/'+name+'_frame_{}'.format(frame)
+    bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
     bpy.context.scene.render.image_settings.file_format = 'PNG'
     bpy.ops.render.render(write_still=True)
 
@@ -78,6 +81,6 @@ for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):
     scene.camera.location.z = zs_tr[i]
     scene.camera.rotation_euler[0] = rxs_tr[i]
 
-    bpy.context.scene.render.filepath = './data/rendered/'+name+'_frame_{}'.format(frame)
+    bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
     bpy.context.scene.render.image_settings.file_format = 'PNG'
     bpy.ops.render.render(write_still=True)
