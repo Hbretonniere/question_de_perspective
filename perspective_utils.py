@@ -34,7 +34,7 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
     im = np.flip(im, axis=1)
     size_x = np.shape(im)[0]  # Get the width and hight of the image for iterating over
     size_y = np.shape(im)[1]
-    list_cube = [[np.shape(im)[1]*10, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+    list_cube = [[np.shape(im)[1]*12, 0, 0, 0, 0], [0, 0, 0, 0, 0]] # intialize the list with shape infos
     size = 1
     # parcourt pixel de l'image reelle
     for x0 in range(0, size_x):

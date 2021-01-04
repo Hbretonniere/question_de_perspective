@@ -3,14 +3,15 @@ import bpy
 import numpy as np
 import sys
 
-nargv = len(sys.argv) - 1
+nargv = len(sys.argv) - 1 
 nb_frames = int(sys.argv[nargv])
 name = sys.argv[nargv-1]
-bpy.ops.render.render(write_still=True)
 file = np.load("data/list_objects/list_cube_"+name+".npy", allow_pickle=True)
 
+bpy.ops.render.render(write_still=True)
+
 # from normal scale to blender scale
-reduce = 10  # file[0][0]
+reduce = 12
 
 if not os.path.exists('data/rendered/'+name):
     os.makedirs('data/rendered/'+name)
@@ -39,20 +40,19 @@ scene.camera.rotation_mode = 'XYZ'
 
 rot_x = np.linspace(75, 85, nb_frames)*np.pi/180  # from a bit to the floor to parallel
 rot_y = 0
-rot_z = np.linspace(180, 360, nb_frames)*np.pi/180  # from facing the bottom wall to facing the cubes
+rot_z = np.linspace(180, 360, nb_frames)*np.pi/180  # from facing the wall behind to facing the cubes
 scene.camera.rotation_euler[1] = rot_y
 
 translat_z = np.linspace(6, 2, nb_frames)
 
 frame = 0
 ymax = 38
-ymin = -5
+ymin = -10
 xmax = 18
 for i, angle in enumerate(np.linspace(np.pi, 0, nb_frames)):
     frame += 1
     y = (ymax+ymin)/2 + (ymax-ymin)/2*np.cos(angle+np.pi)
     x = xmax*np.sin(angle+np.pi)
-    print(y, x)
 
     # Set camera rotation in euler angles
     scene.camera.rotation_euler[2] = rot_z[i]
