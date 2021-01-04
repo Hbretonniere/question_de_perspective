@@ -1,5 +1,4 @@
 import os
-import csv
 import bpy
 import numpy as np
 import sys
@@ -38,29 +37,29 @@ scene = bpy.data.scenes["Scene"]
 fov = 200.0
 scene.camera.rotation_mode = 'XYZ'
 
-rxs = np.linspace(70, 85, nb_frames)*np.pi/180
-ry = 0
-rzs = np.linspace(np.pi+np.pi/6, 2*np.pi, nb_frames)
-scene.camera.rotation_euler[1] = ry
+rot_x = np.linspace(75, 85, nb_frames)*np.pi/180  # from a bit to the floor to parallel
+rot_y = 0
+rot_z = np.linspace(180, 360, nb_frames)*np.pi/180  # from facing the bottom wall to facing the cubes
+scene.camera.rotation_euler[1] = rot_y
 
-zs = np.linspace(6, 2, nb_frames)
+translat_z = np.linspace(6, 2, nb_frames)
 
 frame = 0
-ymax = 60
-ymin = -2
-for i, angle in enumerate(np.linspace(np.pi+np.pi/6, 2*np.pi, nb_frames)):
+ymax = 38
+ymin = -5
+xmax = 18
+for i, angle in enumerate(np.linspace(np.pi, 0, nb_frames)):
     frame += 1
-    y = ymax*np.cos(angle+np.pi)
-    x = 18*np.sin(angle)
+    y = (ymax+ymin)/2 + (ymax-ymin)/2*np.cos(angle+np.pi)
+    x = xmax*np.sin(angle+np.pi)
+    print(y, x)
 
     # Set camera rotation in euler angles
-    rz = rzs[i]
-    scene.camera.rotation_euler[2] = rz
-    scene.camera.rotation_euler[0] = rxs[i]
-
+    scene.camera.rotation_euler[2] = rot_z[i]
+    scene.camera.rotation_euler[0] = rot_x[i]
 
     # Set camera translation
-    scene.camera.location.z = zs[i]
+    scene.camera.location.z = translat_z[i]
     scene.camera.location.y = y
     scene.camera.location.x = x
     bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
@@ -72,13 +71,13 @@ if nb_frames > 16:
 else:
     nb_frames_tr = 2
 zs_tr = np.linspace(2, 0, nb_frames_tr)
-rxs_tr = np.linspace(85, 90, nb_frames_tr)*np.pi/180
+rot_x_tr = np.linspace(85, 90, nb_frames_tr)*np.pi/180
 
 for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):
     frame += 1
     scene.camera.location.y = y
     scene.camera.location.z = zs_tr[i]
-    scene.camera.rotation_euler[0] = rxs_tr[i]
+    scene.camera.rotation_euler[0] = rot_x_tr[i]
 
     bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
     bpy.context.scene.render.image_settings.file_format = 'PNG'
