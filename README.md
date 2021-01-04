@@ -21,5 +21,5 @@ arg2 = number of frames you want to rendered (for example 20)
 arg3 = frame per second for the video (for example 10)
 
 try it with the example : run 
-`sh smiley 20 10`
+`sh main.sh smiley 20 10`
 on the root of the project
