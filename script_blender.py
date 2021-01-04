@@ -11,7 +11,7 @@ bpy.ops.render.render(write_still=True)
 file = np.load("data/list_objects/list_cube_"+name+".npy", allow_pickle=True)
 
 # from normal scale to blender scale
-reduce = file[0][0]
+reduce = 10  # file[0][0]
 
 if not os.path.exists('data/rendered/'+name):
     os.makedirs('data/rendered/'+name)
@@ -35,7 +35,6 @@ if bpy.context.object.mode == 'EDIT':
 bpy.ops.object.select_all(action='DESELECT')
 
 scene = bpy.data.scenes["Scene"]
-
 fov = 200.0
 scene.camera.rotation_mode = 'XYZ'
 
@@ -47,7 +46,7 @@ scene.camera.rotation_euler[1] = ry
 zs = np.linspace(6, 2, nb_frames)
 
 frame = 0
-ymax = 40
+ymax = 60
 ymin = -2
 for i, angle in enumerate(np.linspace(np.pi+np.pi/6, 2*np.pi, nb_frames)):
     frame += 1
