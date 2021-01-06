@@ -10,9 +10,9 @@ You also need to install Blender : https://www.blender.org/download/
 # Run an example
 To run the program, do :
 
-`sh main.sh arg1 arg2 arg3`
+`sh main.sh $image $nb_frames $fps`
 
-img = file name of the image you want to put in perspective (for example smiley.jpg)
+img = file name of the image you want to put in perspective (for example smiley). It will search for original picture in data/images and search as image.png
 
 
 nb_frames = number of frames you want to render (for example 20)

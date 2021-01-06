@@ -6,7 +6,6 @@ image_name=$1
 nb_frames=$2
 fps=$3
 
-path=$(pwd)
 python do_cubes.py  --image_name=$image_name
 blender blender/museum.blend --python script_blender.py -- $image_name $nb_frames
 python do_video.py --image_name=$image_name --fps=$fps
