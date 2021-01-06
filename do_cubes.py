@@ -3,9 +3,27 @@ import argparse
 import numpy as np
 import os
 from PIL import Image
-#from perspective_utils import make_list_cube
 
-def make_list_cube(image, overwrite, distance=70, depth_factor=3, pix_size=2):
+
+def reduce_image(image, max_pixels):
+    '''
+    
+    :param image: 
+    :return: image
+    if image (as np array) is bigger than max_pixels, reduce it, preserving x/y ratio
+    '''
+    global new_image
+    print(max_pixels, "max_pixels")
+    reduction = int(np.sqrt((image.size[0]*image.size[1])/max_pixels))
+    new_x = int(image.size[0]/reduction)
+    new_y = int(image.size[1]/reduction)
+    print("Original image too big (", image.size[0]*image.size[1], "=",
+          image.size[0], "x", image.size[1],
+          "), compared to max authorized", max_pixels, ". Reducing it to ", new_x, ", ", new_y, ".")
+    new_image = image.resize((new_x, new_y), Image.ANTIALIAS)
+    return(new_image)
+
+def make_list_cube(image, overwrite, max_pixels, distance=70, depth_factor=3, pix_size=2):
     '''
     Creates a list of cubes in perspective representing an input 2D image.
     Args :
@@ -26,9 +44,15 @@ def make_list_cube(image, overwrite, distance=70, depth_factor=3, pix_size=2):
         print("List of cubes (data/list_objects/list_cube_"+str(image) + ".npy already \
 there and overwrite set to False. Skipping")
     else:
+        final_npy = "data/list_objects/list_cube_" + str(image) + "-" + str(max_pixels) + ".npy"
         print("Creating list of cubes in", "data/list_objects/list_cube_" + str(image) + ".npy from ",
               "data/images/"+image+".png")
-        im = np.asarray(Image.open("data/images/"+image+str(".png")),dtype=object)  # Can be many different formats
+        im = Image.open("data/images/"+image+str(".png"))  # Can be many different formats
+        print("im.size", im.size)
+        if int(im.size[0]*im.size[1]) > max_pixels:
+            reduce_image(im, max_pixels)
+            im = new_image
+        im = np.asarray(im, dtype=object)
         if im.shape[2] == 4:  # We don't use the transparency of a RGBA image
             im = im[:, :, :3]
 
@@ -67,7 +91,7 @@ there and overwrite set to False. Skipping")
                             continue
                     list_cube = np.vstack([list_cube, cube])
                     nb_cubes += 1
-        np.save("data/list_objects/list_cube_" + str(image) + ".npy", list_cube)
+        np.save(final_npy, list_cube)
         return list_cube
 
 #image = str(sys.argv[1])
@@ -76,5 +100,9 @@ parser.add_argument("--image_name", help="name of the image you want to put in p
                         It will search for original picture in data/images and search as image.png", type=str)
 parser.add_argument("--overwrite", help="overwrite .npy if already created. Default False.",
                     type=bool, default=False)
+parser.add_argument("--max_pixels", help="maximum number of pixels maximum size of the image. "
+                                         "If the original image is bigger, it will be reduced "
+                                         "to this size. Default 1000", type=int, default=1000)
+
 args = parser.parse_args()
-make_list_cube(args.image_name, args.overwrite)
+make_list_cube(args.image_name, args.overwrite, args.max_pixels)
