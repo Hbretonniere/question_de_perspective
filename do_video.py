@@ -8,9 +8,12 @@ import moviepy.video.io.ImageSequenceClip
 parser = argparse.ArgumentParser()
 parser.add_argument("--image_name", help=" file name of the image you want to put in perspective (for example smiley.jpg)" , type=str)
 parser.add_argument("--fps", help="frame per second for the video (for example 10)" , type=int)
+parser.add_argument("--overwrite", help="overwrite .npy if already created. Default False.",
+                    type=bool, default=False)
 args = parser.parse_args()
 image_name = args.image_name
 fps = args.fps
+overwrite = args.overwrite
 
 def sort_nicely(liste):
     convert = lambda text: int(text) if text.isdigit() else text
@@ -18,8 +21,8 @@ def sort_nicely(liste):
     liste.sort(key=alphanum_key)
     return liste
 
-if os.path.isfile('data/rendered/'+image_name+'/'+image_name+'_video.mp4'):
-    print('data/rendered/'+image_name+'/'+image_name+'_video.mp4 already there, skipping')
+if os.path.isfile('data/rendered/'+image_name+'/'+image_name+'_video.mp4') and not overwrite:
+    print('data/rendered/'+image_name+'/'+image_name+'_video.mp4 already there, and overwrite set to False. skipping')
 else:
     image_files = [img for img in sort_nicely(glob.glob('data/rendered/'+image_name+'/'+image_name+'*.png'))]
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)

@@ -5,7 +5,7 @@ import os
 from PIL import Image
 #from perspective_utils import make_list_cube
 
-def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
+def make_list_cube(image, overwrite, distance=70, depth_factor=3, pix_size=2):
     '''
     Creates a list of cubes in perspective representing an input 2D image.
     Args :
@@ -22,9 +22,9 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
               along with its RGB color.
               Also save the array to a .npy file with the name of the image.
     '''
-    if os.path.isfile("data/list_objects/list_cube_" + str(image) + ".npy"):
-        print("List of cubes (data/list_objects/list_cube_"+str(image) + ".npy) "
-                                                                         "already created, skipping")
+    if os.path.isfile("data/list_objects/list_cube_" + str(image) + ".npy") and not overwrite:
+        print("List of cubes (data/list_objects/list_cube_"+str(image) + ".npy already \
+there and overwrite set to False. Skipping")
     else:
         print("Creating list of cubes in", "data/list_objects/list_cube_" + str(image) + ".npy from ",
               "data/images/"+image+".png")
@@ -74,5 +74,7 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
 parser = argparse.ArgumentParser()
 parser.add_argument("--image_name", help="name of the image you want to put in perspective (for example smiley.\
                         It will search for original picture in data/images and search as image.png", type=str)
+parser.add_argument("--overwrite", help="overwrite .npy if already created. Default False.",
+                    type=bool, default=False)
 args = parser.parse_args()
-make_list_cube(args.image_name)
+make_list_cube(args.image_name, args.overwrite)
