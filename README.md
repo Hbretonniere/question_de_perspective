@@ -3,7 +3,7 @@
 # Dependencies
 To be sure to have all the dependencies, you can create a conda environment using :
 
-`conda env create -f environment.yml`
+`conda env create -f env.yml`
 
 You also need to install blender : https://www.blender.org/download/
 
