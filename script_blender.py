@@ -18,12 +18,21 @@ import os
 import bpy
 import numpy as np
 import sys
+import argparse
 
 ''' initialisation '''
+#parser = argparse.ArgumentParser()
+#parser.add_argument("--image_name", help="name of the image you want to put in perspective (for example "
+#                                         "smiley.jpg)", type=str)
+#parser.add_argument("--nb_frames", help="number of frames you want to rendered (for example 20))",
+#                    type=int)
+#args = parser.parse_args()
+#nb_frames = args.nb_frames
+#image_name = args.image_name
 nargv = len(sys.argv) - 1
 nb_frames = int(sys.argv[nargv])
-name = sys.argv[nargv-1]
-list_cubes = np.load("data/list_objects/list_cube_"+name+".npy", allow_pickle=True)
+image_name = sys.argv[nargv-1]
+list_cubes = np.load("data/list_objects/list_cube_"+image_name+".npy", allow_pickle=True)
 
 bpy.ops.render.render(write_still=True)
 
@@ -31,8 +40,8 @@ bpy.ops.render.render(write_still=True)
 reduce = 12
 
 # We will save the images in a folder with the name of the original image
-if not os.path.exists('data/rendered/'+name):
-    os.makedirs('data/rendered/'+name)
+if not os.path.exists('data/rendered/'+image_name):
+    os.makedirs('data/rendered/'+image_name)
 
 ''' =======================
     Creation of the cubes
@@ -92,22 +101,26 @@ xmax = 18
 ''' The (x,y) ellipse coordinates are parameterized by a single angle, from 360 to 180, with nb_frames steps'''
 for i, angle in enumerate(np.linspace(2*np.pi, np.pi, nb_frames)):
     frame += 1
-    y = (ymax+ymin)/2 + (ymax-ymin)/2*np.cos(angle)
-    x = xmax*np.sin(angle)
+    if os.path.isfile('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)):
+        print('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame),'already created, skipping')
+    else:
+        print('creating ./data/rendered/' + image_name + '/' + image_name + '_frame_{}'.format(frame))
+        y = (ymax+ymin)/2 + (ymax-ymin)/2*np.cos(angle)
+        x = xmax*np.sin(angle)
 
-    # Set camera rotation in euler angles
-    scene.camera.rotation_euler[2] = rot_z[i]
-    scene.camera.rotation_euler[0] = rot_x[i]
+        # Set camera rotation in euler angles
+        scene.camera.rotation_euler[2] = rot_z[i]
+        scene.camera.rotation_euler[0] = rot_x[i]
 
-    # Set camera translation
-    scene.camera.location.z = translat_z[i]
-    scene.camera.location.y = y
-    scene.camera.location.x = x
+        # Set camera translation
+        scene.camera.location.z = translat_z[i]
+        scene.camera.location.y = y
+        scene.camera.location.x = x
 
-    # Render and save the current frame
-    bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
-    bpy.context.scene.render.image_settings.file_format = 'PNG'
-    bpy.ops.render.render(write_still=True)
+        # Render and save the current frame
+        bpy.context.scene.render.filepath = './data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)
+        bpy.context.scene.render.image_settings.file_format = 'PNG'
+        bpy.ops.render.render(write_still=True)
 
 ''' ====== Final Translations ======= '''
 ''' The number of steps is conditioned on the number used for the ellipse
@@ -123,10 +136,13 @@ rot_x = np.linspace(85, 90, nb_frames_tr)*np.pi/180  # from a bit facing the flo
 
 for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):
     frame += 1
-    scene.camera.location.y = y
-    scene.camera.location.z = zs_tr[i]
-    scene.camera.rotation_euler[0] = rot_x[i]
-
-    bpy.context.scene.render.filepath = './data/rendered/'+name+'/'+name+'_frame_{}'.format(frame)
-    bpy.context.scene.render.image_settings.file_format = 'PNG'
-    bpy.ops.render.render(write_still=True)
+    if os.path.isfile('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)):
+        print('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame),'already created, skipping')
+    else:
+        print('creating ./data/rendered/' + image_name + '/' + image_name + '_frame_{}'.format(frame))
+        scene.camera.location.y = y
+        scene.camera.location.z = zs_tr[i]
+        scene.camera.rotation_euler[0] = rot_x[i]
+        bpy.context.scene.render.filepath = './data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)
+        bpy.context.scene.render.image_settings.file_format = 'PNG'
+        bpy.ops.render.render(write_still=True)
