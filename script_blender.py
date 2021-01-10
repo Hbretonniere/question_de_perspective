@@ -30,9 +30,10 @@ import argparse
 #nb_frames = args.nb_frames
 #image_name = args.image_name
 nargv = len(sys.argv) - 1
-nb_frames = int(sys.argv[nargv])
-image_name = sys.argv[nargv-1]
-list_cubes = np.load("data/list_objects/list_cube_"+image_name+".npy", allow_pickle=True)
+max_pixels = int(sys.argv[nargv])
+nb_frames = int(sys.argv[nargv-1])
+image_name = sys.argv[nargv-2]
+list_cubes = np.load("data/list_objects/list_cube_"+image_name+"-"+str(max_pixels)+".npy", allow_pickle=True)
 
 bpy.ops.render.render(write_still=True)
 
@@ -68,7 +69,7 @@ for i in range(2, list_cubes.shape[0]):
 ''' ==============================
         Creation of the frames
     ==============================
-The image is creating on the [x, z] plane, and the perspewctive is following the y axis. The perfect perspective is at
+The image is creating on the [x, z] plane, and the perspective is following the y axis. The perfect perspective is at
 the origin (0,0,0)
 To do a nice video, we want to move the camera around the cubes, from the back to the final position.
 To do so, we move the camera along half an ellipse from behind the cubes (ymax=25) to a bit behind the cube (ymin=-5)
@@ -81,7 +82,7 @@ the perfect perspective.
 
 
 ''' ====== Ellipse ======= '''
-'''Initilisation of the camera movements'''
+'''Initialisation of the camera movements'''
 
 scene = bpy.data.scenes["Scene"]
 fov = 200.0
@@ -99,12 +100,15 @@ ymax = 38
 ymin = -10
 xmax = 18
 ''' The (x,y) ellipse coordinates are parameterized by a single angle, from 360 to 180, with nb_frames steps'''
+
 for i, angle in enumerate(np.linspace(2*np.pi, np.pi, nb_frames)):
     frame += 1
-    if os.path.isfile('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)):
-        print('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame),'already created, skipping')
+    frame_name = './data/rendered/'+image_name+'/'+image_name+'_max_pixels'+str(max_pixels)+\
+                 '_frame_'+str(frame)
+    if os.path.isfile(frame_name):
+        print(frame_name,'already created, skipping')
     else:
-        print('creating ./data/rendered/' + image_name + '/' + image_name + '_frame_{}'.format(frame))
+        print('creating ', frame_name)
         y = (ymax+ymin)/2 + (ymax-ymin)/2*np.cos(angle)
         x = xmax*np.sin(angle)
 
@@ -118,7 +122,7 @@ for i, angle in enumerate(np.linspace(2*np.pi, np.pi, nb_frames)):
         scene.camera.location.x = x
 
         # Render and save the current frame
-        bpy.context.scene.render.filepath = './data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)
+        bpy.context.scene.render.filepath = frame_name
         bpy.context.scene.render.image_settings.file_format = 'PNG'
         bpy.ops.render.render(write_still=True)
 
@@ -136,13 +140,13 @@ rot_x = np.linspace(85, 90, nb_frames_tr)*np.pi/180  # from a bit facing the flo
 
 for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):
     frame += 1
-    if os.path.isfile('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)):
-        print('./data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame),'already created, skipping')
+    if os.path.isfile(frame_name):
+        print(frame_name,'already created, skipping')
     else:
-        print('creating ./data/rendered/' + image_name + '/' + image_name + '_frame_{}'.format(frame))
+        print('creating', frame_name)
         scene.camera.location.y = y
         scene.camera.location.z = zs_tr[i]
         scene.camera.rotation_euler[0] = rot_x[i]
-        bpy.context.scene.render.filepath = './data/rendered/'+image_name+'/'+image_name+'_frame_{}'.format(frame)
+        bpy.context.scene.render.filepath = frame_name
         bpy.context.scene.render.image_settings.file_format = 'PNG'
         bpy.ops.render.render(write_still=True)
