@@ -26,6 +26,10 @@ def sort_nicely(liste):
 frame_name = './data/rendered/'+image_name+'/'+image_name+'_max_pixels'+str(max_pixels)+\
                  '_frame_'
 image_files = sort_nicely(glob.glob(frame_name+'*.png'))
+
+# let the final frame for 2 seconds on the end of the video
+for i in range(2*fps):
+    image_files.append(image_files[-1])
 nb_frames = len(image_files)
 video_name = 'data/rendered/'+image_name+'/'+image_name+'_'+\
 str(nb_frames)+'frames_'+'max_pixels'+str(max_pixels)+'_'+str(fps)+'fps.mp4'
