@@ -23,3 +23,8 @@ fps = frame per second for the video (for example 10)
 try it with the example : run 
 `sh main.sh smiley 20 10`
 at the root of the project
+
+# What you can do with this project :
+This project will create a random 3D projection of any image you want. For example, lets take the famous Mondrian picture :
+![Mondrian](./data/for_readme/mondrian.png)
+
