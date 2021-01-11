@@ -25,6 +25,7 @@ try it with the example : run
 at the root of the project
 
 # What you can do with this project :
-This project will create a random 3D projection of any image you want. For example, lets take the famous Mondrian picture :
-![Mondrian](./data/for_readme/mondrian.png)
+This project will create a random 3D projection of any image you want. For example, lets take the famous Mondrian painting :
+
+![Mondrian](./data/for_readme/mondrian.png =5x)
 
