@@ -97,8 +97,8 @@ translat_z = np.linspace(6, 2, nb_frames)
 
 frame = 0
 ymax = 38
-ymin = -10
-xmax = 18
+ymin = -15
+xmax = 20
 ''' The (x,y) ellipse coordinates are parameterized by a single angle, from 360 to 180, with nb_frames steps'''
 
 for i, angle in enumerate(np.linspace(2*np.pi, np.pi, nb_frames)):
@@ -131,7 +131,7 @@ for i, angle in enumerate(np.linspace(2*np.pi, np.pi, nb_frames)):
 To do : give better meaning of 'nb_frames' '''
 
 if nb_frames > 16:
-    nb_frames_tr = nb_frames/8
+    nb_frames_tr = nb_frames/6
 else:
     nb_frames_tr = 2
 
@@ -140,6 +140,8 @@ rot_x = np.linspace(85, 90, nb_frames_tr)*np.pi/180  # from a bit facing the flo
 
 for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):
     frame += 1
+    frame_name = './data/rendered/'+image_name+'/'+image_name+'_max_pixels'+str(max_pixels)+\
+                 '_frame_'+str(frame)
     if os.path.isfile(frame_name):
         print(frame_name,'already created, skipping')
     else:
