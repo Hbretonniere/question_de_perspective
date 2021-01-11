@@ -27,5 +27,10 @@ at the root of the project
 # What you can do with this project :
 This project will create a random 3D projection of any image you want. For example, lets take the famous Mondrian painting :
 
-![Mondrian](./data/for_readme/mondrian.png =5x)
+<img src="./data/for_readme/mondrian.png" alt="Mondrian" width="200")
 
+The project will decompose each pixel to a cube, to create a perspective illusion. The illusion will be placed in a 3D rendered museum, like that :
+![perspective](./data/for_readme/perspective_mondrian.png)
+
+Then, it will automaticaly create a video to reveal the perspective :
+![gif](./data/for_readme/gif_mondrian.gif)
