@@ -40,8 +40,9 @@ You can also create your own pixel art using the command at the root of the proj
 
 `ipython pixel_art.py` 
 
-It will create a a blanck pixel art canvas, along with a color palette. You can now click on the color palette, and the 
+It will create a a blanck pixel art canvas, along with a color palette. You can now click on the color palette, and then 
 paint it in the canvas !
-When you're happy with your masterpiece, you can right click (or ctrl click) to save it ! 
+When you're happy with your masterpiece, you can right click (or ctrl click) to save it !
+
 (to do : make the size of the canvas customisable, add more colors, add a possibility to launch the perpsective program
 directly from the pixel art)
