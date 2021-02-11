@@ -35,3 +35,13 @@ The project will decompose each pixel to a cube, to create a perspective illusio
 Finally, it will automaticaly create a video to reveal the perspective :
 
 ![gif](./data/for_readme/gif_mondrian.gif)
+
+You can also create your own pixel art using the command at the root of the project :
+
+`ipython pixel_art.py` 
+
+It will create a a blanck pixel art canvas, along with a color palette. You can now click on the color palette, and the 
+paint it in the canvas !
+When you're happy with your masterpiece, you can right click (or ctrl click) to save it ! 
+(to do : make the size of the canvas customisable, add more colors, add a possibility to launch the perpsective program
+directly from the pixel art)
