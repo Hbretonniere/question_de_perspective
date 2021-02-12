@@ -40,21 +40,30 @@ def make_list_cube(image, overwrite, max_pixels, distance=70, depth_factor=3, pi
               along with its RGB color.
               Also save the array to a .npy file with the name of the image.
     '''
-    if os.path.isfile("data/list_objects/list_cube_" + str(image) + ".npy") and not overwrite:
-        print("List of cubes (data/list_objects/list_cube_"+str(image) + ".npy already \
-there and overwrite set to False. Skipping")
+    name_cubes = "data/list_objects/list_cube_" + image.replace('/','.').split('.',-2)[0]
+    if os.path.isfile(name_cubes+".npy") and not overwrite:
+        print("List of cubes ( " + name_cubes + "already \
+                there and overwrite set to False. Skipping")
     else:
-        final_npy = "data/list_objects/list_cube_" + str(image) + "-" + str(max_pixels) + ".npy"
-        print("Creating list of cubes in", "data/list_objects/list_cube_" + str(image) + ".npy from ",
-              "data/images/"+image+".png")
-        im = Image.open("data/images/"+image+str(".png"))  # Can be many different formats
-        print("im.size", im.size)
-        if int(im.size[0]*im.size[1]) > max_pixels:
-            reduce_image(im, max_pixels)
-            im = new_image
-        im = np.asarray(im, dtype=object)
-        if im.shape[2] == 4:  # We don't use the transparency of a RGBA image
-            im = im[:, :, :3]
+        final_npy = name_cubes + "-" + str(max_pixels) + ".npy"
+        print("Creating list of cubes in "+ name_cubes +".npy from "
+              + str(image))
+    #    im = Image.open("data/images/"+image+str(".png"))  # Can be many different formats
+        if image[-3:] == "npy":
+            im = np.load(image, allow_pickle=True)
+            print(im.shape)
+        else:
+            im = Image.open(image)  # Can be many different formats
+            print(type(im))
+            print("im.size", im.size)
+            if int(im.size[0]*im.size[1]) > max_pixels:
+                reduce_image(im, max_pixels)
+                im = new_image
+            im = np.asarray(im, dtype=object)
+            if im.shape[2] == 4:  # We don't use the transparency of a RGBA image
+                im = im[:, :, :3]
+                print(im.shape)
+                print(type(im))
 
         ''' ======== Pre-processing======== '''
         ''' Because of projection issue, we need to flip vertically and horizontally the image'''
@@ -106,3 +115,5 @@ parser.add_argument("--max_pixels", help="maximum number of pixels maximum size 
 
 args = parser.parse_args()
 make_list_cube(args.image_name, args.overwrite, args.max_pixels)
+#make_list_cube("custom_image.png", True, 1000)
+

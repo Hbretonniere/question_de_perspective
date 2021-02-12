@@ -53,6 +53,7 @@ class pixel_art:
                 plt.draw()
         if event.button == 3:
             np.save('custom_image.npy', self.image)
+            mpl.image.imsave('custom_image.png',self.image)
 
             
 fig = plt.figure(figsize=(5, 5), constrained_layout=True)
