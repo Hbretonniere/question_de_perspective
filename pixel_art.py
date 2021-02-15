@@ -2,6 +2,7 @@ from math import ceil
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
+import os
 
 
 class pixel_art:
@@ -14,7 +15,8 @@ class pixel_art:
         self.size = size
 
         self.canevas = fig.add_subplot(gs[0])
-        self.canevas.set_title('Left click to paint with the selected color. \n Right click (or ctrl click) to save.', fontsize=7)
+        self.canevas.set_title('Left click to paint with the selected color. \n Right click (or ctrl click) to save'+\
+                                '\n Double click to launch the perspective rendering !', fontsize=7)
         self.canevas.set_xticks(np.arange(self.size))
         self.canevas.set_yticks(np.arange(self.size))
         self.canevas.set_xticklabels([""]*self.size)
@@ -31,7 +33,7 @@ class pixel_art:
         self.image = self.image.astype(np.uint8)
         self.palette = np.asarray([[255, 0, 0], [0, 255, 0], [0, 0, 255],
                                   [253, 173, 11], [125, 28, 187], [28, 187, 183],
-                                  [233, 249, 35], [197, 95, 8], [255, 255, 255]])
+                                  [233, 249, 35], [0, 0, 0], [255, 255, 255]])
         self.palette = self.palette.reshape(3, 3, 3)
 
 #         self.cmap = mpl.colors.ListedColormap(['white', 'red', 'green', 'blue', 'cyan', 'orange', 'black', 'purple', 'yellow'])
@@ -56,7 +58,7 @@ class pixel_art:
                 self.image[ceil(click_y), ceil(click_x)] = self.couleur
                 self.canevas.imshow(self.image, vmin=0, vmax=9,
                                     extent=[-1, self.size-1, -1, self.size-1], origin='lower')
-                plt.suptitle(" ", x=0.5, y=0.9)
+                plt.suptitle(" ", x=0.5, y=0.92)
                 plt.draw()
         if event.button == 3:
             im_to_save = np.copy(self.image)  # We need to inver the R and B channels
@@ -66,8 +68,13 @@ class pixel_art:
             np.save('data/images/custom_image.npy', im_to_save)
             im = Image.fromarray(im_to_save)
             im.save("data/images/custom_image.png")
-            plt.suptitle("SAVED !", x=0.5, y=0.9, color='red')
+            plt.suptitle("SAVED !", x=0.5, y=0.92, color='red')
             plt.draw()
+
+        if event.dblclick:
+            plt.suptitle("The video is ready, you can quit to see it !", x=0.5, y=0.92, color='red')
+            plt.draw()
+            os.system("sh main.sh custom_image 10 10")
 
 
 fig = plt.figure(figsize=(5, 5), constrained_layout=True)
