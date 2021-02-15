@@ -11,7 +11,7 @@ The project will decompose each pixel to a cube and create this random looking d
 
 ![perspective](./data/for_readme/perspective_mondrian.png)
 
-But as the camera rotate around the cubes, the illusion slowly disappear : when it comes to the perfect point, represented
+But as the camera rotates around the cubes, the illusion slowly disappear : when it comes to the perfect point, represented
 as a black ring, al the cubes get perfectly aligned and reveal the input image :
 
 ![gif](./data/for_readme/gif_mondrian.gif)
