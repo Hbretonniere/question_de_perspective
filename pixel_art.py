@@ -66,9 +66,12 @@ class pixel_art:
             plt.draw()
         
         def save_and_launch(val):
+            save_drawing(None)
             plt.suptitle("Wait for it !", x=0.5, y=0.92, color='red')
             plt.draw()
             os.system("sh main.sh custom_image 10 10")
+            plt.close()
+            exit()
 
         self.save_button.on_clicked(save_drawing)
         self.launch_button.on_clicked(save_and_launch)
