@@ -75,7 +75,7 @@ To do : re-use a material if the color has been already seen'''
 
 for i in range(2, list_cubes.shape[0]):
     bpy.ops.mesh.primitive_cube_add(size=float(list_cubes[i][3])/reduce,
-                                    location=(float(list_cubes[i][1])/reduce+38,
+                                    location=(float(list_cubes[i][1])/reduce,
                                     float(list_cubes[i][2])/reduce,
                                     float(list_cubes[i][0])/reduce))
 
@@ -89,16 +89,8 @@ for i in range(2, list_cubes.shape[0]):
 
 context = bpy.context.copy()
 
-full_screen()
-starting_position()
-
-bpy.ops.view3d.walk(c, 'INVOKE_DEFAULT')
-
-
 ''' ====== Ellipse ======= '''
 '''Initialisation of the camera movements'''
-
-
 
 scene = bpy.data.scenes["Scene"]
 fov = 200.0
@@ -174,7 +166,3 @@ cam.location.x = 0
 cam.location.y = 0
 cam.location.z = 0
 cam.rotation_euler[0] = 0
-
-
-
-# update_camera(bpy.data.objects['Camera'])

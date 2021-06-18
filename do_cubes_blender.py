@@ -23,19 +23,11 @@ sys.path.insert(0,'./')
 from blender_utils import full_screen, starting_position
 
 ''' initialisation '''
-# parser = argparse.ArgumentParser()
-# parser.add_argument("--image_name", help="name of the image you want to put in perspective (for example "
-#                                         "smiley.jpg)", type=str)
-# parser.add_argument("--nb_frames", help="number of frames you want to rendered (for example 20))",
-#                    type=int)
-# args = parser.parse_args()
-# nb_frames = args.nb_frames
-# image_name = args.image_name
 
 nargv = len(sys.argv) - 1
 max_pixels = int(sys.argv[nargv])
-nb_frames = int(sys.argv[nargv-1])
-image_name = sys.argv[nargv-2]
+# nb_frames = int(sys.argv[nargv-1])
+image_name = sys.argv[nargv-1]
 list_cubes = np.load("data/list_objects/list_cube_"+image_name+"-"+str(max_pixels)+".npy", allow_pickle=True)
 
 bpy.ops.render.render(write_still=True)
@@ -54,10 +46,11 @@ We loop for all the cubes of the list, and create a blender cube object,
 with the right position and size. We rename it, and change its color by
 creating a new blender material
 To do : re-use a material if the color has been already seen'''
+#+38
 
 for i in range(2, list_cubes.shape[0]):
     bpy.ops.mesh.primitive_cube_add(size=float(list_cubes[i][3])/reduce,
-                                    location=(float(list_cubes[i][1])/reduce+38,
+                                    location=(float(list_cubes[i][1])/reduce,
                                     float(list_cubes[i][2])/reduce,
                                     float(list_cubes[i][0])/reduce))
 

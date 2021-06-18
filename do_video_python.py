@@ -17,11 +17,13 @@ fps = args.fps
 overwrite = args.overwrite
 max_pixels = args.max_pixels
 
+
 def sort_nicely(liste):
     convert = lambda text: int(text) if text.isdigit() else text
     alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
     liste.sort(key=alphanum_key)
     return liste
+
 
 frame_name = './data/rendered/'+image_name+'/'+image_name+'_max_pixels'+str(max_pixels)+\
                  '_frame_'
@@ -39,4 +41,3 @@ else:
 
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
     clip.write_videofile(video_name)
-
