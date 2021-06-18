@@ -69,7 +69,7 @@ class pixel_art:
             save_drawing(None)
             plt.suptitle("Wait for it !", x=0.5, y=0.92, color='red')
             plt.draw()
-            os.system("sh main.sh custom_image 10 10")
+            os.system("sh main.sh custom_image 30 10")
             plt.close()
             exit()
 
