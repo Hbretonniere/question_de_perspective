@@ -21,7 +21,7 @@ def starting_position():
             a.spaces[0].region_3d.view_matrix[2] = [-0.27, 0.94, 0.091, -55]
             a.spaces[0].region_3d.view_matrix[3] = [0, 0, 0, 1]
             a.spaces[0].region_3d.view_rotation = [0.1, 0.08, -0.66, -0.72]
-            a.spaces[0].region_3d.view_distance = 5
+            a.spaces[0].region_3d.view_distance = 70
             break
     c = {}
     c['area'] = a

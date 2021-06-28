@@ -34,7 +34,7 @@ def visit(_):
 def create_your_video(_):
     # plt.text(1.5, 0.5, 'Wait for the rendering of the video, takes few minutes.', color='red')
     plt.draw()
-    os.system('blender -b blender/museum.blend --python create_video.py -- custom_image 2 1000')
+    os.system('blender -b blender/museum.blend --python create_video.py -- custom_image 30 1000')
     os.system('python do_video_python.py --image_name=custom_image --fps=10 --max_pixels=1000 --overwrite=True')
     
 
