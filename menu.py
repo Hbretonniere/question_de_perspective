@@ -6,21 +6,23 @@ import glob
 
 fig = plt.figure(figsize=(5, 5), constrained_layout=True)
 
+plt.text(0.18, 0.8, 'Choose what you want to do !', c='red', fontsize=15)
+plt.axis('off')
 
-draw_ax = plt.axes([0.1, 0.2, 0.4, 0.1])
-draw_button = Button(draw_ax, 'Draw your own art', color='gray', hovercolor='Blue')
-
-visit_ax = plt.axes([0.55, 0.2, 0.4, 0.1])
+visit_ax = plt.axes([0.05, 0.5, 0.4, 0.1])
 visit_button = Button(visit_ax, 'Visit the Museum', color='gray', hovercolor='red')
 
-video_ax = plt.axes([0.1, 0.5, 0.4, 0.1])
+draw_ax = plt.axes([0.55, 0.5, 0.4, 0.1])
+draw_button = Button(draw_ax, 'Draw your own art', color='gray', hovercolor='Blue')
+
+create_vid_ax = plt.axes([0.3, 0.3, 0.4, 0.1])
+create_vid_button = Button(create_vid_ax, 'Create video', color='gray', hovercolor='Blue')
+
+video_ax = plt.axes([0.05, 0.1, 0.4, 0.1])
 video_button = Button(video_ax, 'See your video', color='gray', hovercolor='Blue')
 
-mondrian_ax = plt.axes([0.55, 0.5, 0.4, 0.1])
+mondrian_ax = plt.axes([0.55, 0.1, 0.4, 0.1])
 mondrian_button = Button(mondrian_ax, 'See Mondrian video', color='gray', hovercolor='Blue')
-
-create_vid_ax = plt.axes([0.3, 0.7, 0.4, 0.1])
-create_vid_button = Button(create_vid_ax, 'Create video', color='gray', hovercolor='Blue')
 
 
 def pixel_art(_):
