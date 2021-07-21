@@ -101,7 +101,7 @@ rot_y = 0  # no rotation along the y axis
 rot_z = np.linspace(180, 360, nb_frames)*np.pi/180  # from facing the wall behind to facing the cubes
 scene.camera.rotation_euler[1] = rot_y
 
-translat_z = np.linspace(6, 2, nb_frames)
+translat_z = np.linspace(6, 0.5, nb_frames)
 
 frame = 0
 ymax = 38
@@ -143,7 +143,7 @@ if nb_frames > 16:
 else:
     nb_frames_tr = 2
 
-zs_tr = np.linspace(2, 0, nb_frames_tr)   # from a bit above to 0
+zs_tr = np.linspace(0.5, 0, nb_frames_tr)   # from a bit above to 0
 rot_x = np.linspace(85, 90, nb_frames_tr)*np.pi/180  # from a bit facing the floor to parrallel to the flooor
 
 for i, y in enumerate(np.linspace(ymin, 0, nb_frames_tr)):

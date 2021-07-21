@@ -32,7 +32,7 @@ class pixel_art:
         self.image = np.zeros((self.size, self.size, 3)) + (255, 255, 255)
         self.image = self.image.astype(np.uint8)
         self.palette = np.asarray([[255, 0, 0], [0, 255, 0], [0, 0, 255],
-                                  [253, 173, 11], [125, 28, 187], [28, 187, 183],
+                                  [253, 173, 11], [125, 28, 187], [100, 100, 100],
                                   [233, 249, 35], [0, 0, 0], [255, 255, 255]])
         self.palette = self.palette.reshape(3, 3, 3)
 
@@ -44,10 +44,10 @@ class pixel_art:
         fig.canvas.mpl_connect('button_press_event', self)
         self.couleur = 0
 
-        ax_save_button = plt.axes([0.65, 0.2, 0.15, 0.1])
-        ax_launch_button = plt.axes([0.82, 0.2, 0.15, 0.1])
-        self.save_button = Button(ax_save_button, 'SAVE', color='gray', hovercolor='red')
-        self.launch_button = Button(ax_launch_button, 'LAUNCH', color='gray', hovercolor='red')
+        ax_save_button = plt.axes([0.7, 0.08, 0.25, 0.1])
+        ax_launch_button = plt.axes([0.7, 0.2, 0.25, 0.1])
+        self.save_button = Button(ax_save_button, 'Save the image', color='gray', hovercolor='red')
+        self.launch_button = Button(ax_launch_button, 'See it in \n the museum !', color='gray', hovercolor='red')
 
     def __call__(self, event):
         click_x = event.xdata
@@ -64,7 +64,7 @@ class pixel_art:
             im.save("data/images/custom_image.png")
             plt.suptitle("SAVED !", x=0.5, y=0.92, color='red')
             plt.draw()
-        
+
         def save_and_launch(val):
             save_drawing(None)
             plt.suptitle("Wait for it !", x=0.5, y=0.92, color='red')
