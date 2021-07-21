@@ -10,8 +10,6 @@ import re
 import glob
 
 
-
-
 def get_hex_color(x):
     'Transform a RBG color to its hexadecimal code'
     r = max(0, min(x[0], 255))
@@ -20,10 +18,6 @@ def get_hex_color(x):
     return "#{0:02x}{1:02x}{2:02x}".format(r, g, b)
 
 
-<<<<<<< Updated upstream
-
-
-=======
 def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
     ''' 
     Creates a list of cubes in perspective representing an input 2D image.
@@ -88,4 +82,5 @@ def make_list_cube(image, distance=70, depth_factor=3, pix_size=2):
                     nb_cubes += 1
         np.save("data/list_objects/list_cube_" + str(image) + ".npy", list_cube)
         return list_cube
->>>>>>> Stashed changes
+
+

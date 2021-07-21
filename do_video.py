@@ -12,6 +12,7 @@ args = parser.parse_args()
 image_name = args.image_name
 fps = args.fps
 
+
 def sort_nicely(liste):
     convert = lambda text: int(text) if text.isdigit() else text
     alphanum_key = lambda key: [convert(c) for c in re.split('([0-9]+)', key)]
@@ -24,4 +25,4 @@ else:
     image_files = [img for img in sort_nicely(glob.glob('data/rendered/'+image_name+'/'+image_name+'*.png'))]
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
     clip.write_videofile('data/rendered/'+image_name+'/'+image_name+'_video.mp4')
---image_name
+# --image_name
