@@ -10,7 +10,7 @@ language = 'english'
 
 im = Image.open("data/images/language_flags.png")
 left, bottom, width, height = [0.05, 0.85, 0.2, 0.2]
-ax2 = fig.add_axes([left, bottom, width, height])
+ax2 = fig.add_axes([left, bottom, width, height], label='flag')
 ax2.imshow(im)
 ax2.axis('off')
 
@@ -52,17 +52,13 @@ menu = visit_button, draw_button, create_vid_button, video_button, mondrian_butt
 def select_language(event):
     x = event.xdata
     y = event.ydata
-    if ((x < 720) & (y < 453)):
+    if ((x < 720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'english'
-        # ax2.set_title(language)
-    if ((x > 720) & (x < 1440) & (y < 453)):
+    if ((x > 720) & (x < 1440) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'french'
-        # ax2.set_title(language)
-
-    # ax2.set_title(f'{click_x}, {click_y}')
-    # menu = create_menu(language)
-    change_language(language)
-    plt.draw()
+    if (event.inaxes.get_label() == 'flag'):
+        change_language(language)
+        plt.draw()
     return
 
 
