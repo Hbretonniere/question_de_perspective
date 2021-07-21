@@ -23,6 +23,7 @@ def reduce_image(image, max_pixels):
     new_image = image.resize((new_x, new_y), Image.ANTIALIAS)
     return(new_image)
 
+
 def make_list_cube(image, overwrite, max_pixels, distance=70, depth_factor=3, pix_size=2):
     '''
     Creates a list of cubes in perspective representing an input 2D image.

@@ -1,28 +1,88 @@
 from matplotlib.widgets import Button
 import matplotlib.pyplot as plt
-import cv2
 import os
-import glob
+from PIL import Image
 
-fig = plt.figure(figsize=(5, 5), constrained_layout=True)
-
-plt.text(0.18, 0.8, 'Choose what you want to do !', c='red', fontsize=15)
+fig, ax = plt.subplots(figsize=(5, 5), constrained_layout=True)
 plt.axis('off')
+language = 'english'
+
+
+im = Image.open("data/images/language_flags.png")
+left, bottom, width, height = [0.05, 0.85, 0.2, 0.2]
+ax2 = fig.add_axes([left, bottom, width, height])
+ax2.imshow(im)
+ax2.axis('off')
+
+english_text = {'title': 'Choose what you want to do !',
+                'visit': 'Visit the Museum',
+                'draw': 'Draw your own art',
+                'create': 'Create video',
+                'see_video': 'See your video',
+                'see_mondrian': 'See Mondrian video'}
+
+french_text = {'title': '         Choisis ton action !',
+               'visit': 'Visite le Musée',
+               'draw': "Dessine ta propre \n oeuvre d'art",
+               'create': 'Crée ta video',
+               'see_video': 'Regarde ta vidéo',
+               'see_mondrian': 'Regarde la vidéo Mondrian'}
+
+text = english_text
+
+fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
 
 visit_ax = plt.axes([0.05, 0.5, 0.4, 0.1])
-visit_button = Button(visit_ax, 'Visit the Museum', color='gray', hovercolor='red')
+visit_button = Button(visit_ax, text['visit'], color='gray', hovercolor='red')
 
 draw_ax = plt.axes([0.55, 0.5, 0.4, 0.1])
-draw_button = Button(draw_ax, 'Draw your own art', color='gray', hovercolor='Blue')
+draw_button = Button(draw_ax, text['draw'], color='gray', hovercolor='Blue')
 
 create_vid_ax = plt.axes([0.3, 0.3, 0.4, 0.1])
-create_vid_button = Button(create_vid_ax, 'Create video', color='gray', hovercolor='Blue')
+create_vid_button = Button(create_vid_ax, text['create'], color='gray', hovercolor='Blue')
 
 video_ax = plt.axes([0.05, 0.1, 0.4, 0.1])
-video_button = Button(video_ax, 'See your video', color='gray', hovercolor='Blue')
+video_button = Button(video_ax, text['see_video'], color='gray', hovercolor='Blue')
 
 mondrian_ax = plt.axes([0.55, 0.1, 0.4, 0.1])
-mondrian_button = Button(mondrian_ax, 'See Mondrian video', color='gray', hovercolor='Blue')
+mondrian_button = Button(mondrian_ax, text['see_mondrian'], color='gray', hovercolor='Blue')
+menu = visit_button, draw_button, create_vid_button, video_button, mondrian_button
+
+
+def select_language(event):
+    x = event.xdata
+    y = event.ydata
+    if ((x < 720) & (y < 453)):
+        language = 'english'
+        # ax2.set_title(language)
+    if ((x > 720) & (x < 1440) & (y < 453)):
+        language = 'french'
+        # ax2.set_title(language)
+
+    # ax2.set_title(f'{click_x}, {click_y}')
+    # menu = create_menu(language)
+    change_language(language)
+    plt.draw()
+    return
+
+
+def change_language(language):
+    if language == 'french':
+        text = french_text
+    if language == 'english':
+        text = english_text
+
+    draw_button.label.set_text(text['draw'])
+    visit_button.label.set_text(text['visit'])
+    video_button.label.set_text(text['see_video'])
+    mondrian_button.label.set_text(text['see_mondrian'])
+    create_vid_button.label.set_text(text['create'])
+    del fig.texts[0]
+
+    fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
+
+
+fig.canvas.mpl_connect('button_press_event', select_language)
 
 
 def pixel_art(_):
@@ -38,7 +98,7 @@ def create_your_video(_):
     plt.draw()
     os.system('blender -b blender/museum.blend --python create_video.py -- custom_image 30 1000')
     os.system('python do_video_python.py --image_name=custom_image --fps=10 --max_pixels=1000 --overwrite=True')
-    
+
 
 def read_video(_):
     try:
