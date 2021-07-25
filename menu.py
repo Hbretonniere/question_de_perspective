@@ -3,13 +3,23 @@ import matplotlib.pyplot as plt
 import os
 from PIL import Image
 
+
+''' 
+TO DOOOOOOO 
+- ADD THE POSSIBILITY TO CREATE WHITE CUBES (FOR EXAMPLE WITH A COLOR LIKE (1E-6, 1E-6, 1E-6),
+ and put the white apart to be the eraser
+- ADAPT THE LANGUAGE OF THE PIXEL ART WITH THE LANGUAGE OF THE MENU.
+- ADDS RANDOM PUZZLING OF THE SHAPES (2D) (PYRAMIFS, PARRALELLEPIPEDES, SQUARES...)
+https://www.youtube.com/watch?v=SKfpYVK_r0E
+'''
+
 fig, ax = plt.subplots(figsize=(5, 5), constrained_layout=True)
 plt.axis('off')
 language = 'english'
 
 
 im = Image.open("data/images/language_flags.png")
-left, bottom, width, height = [0.05, 0.85, 0.2, 0.2]
+left, bottom, width, height = [0.05, 0.8, 0.3, 0.3]
 ax2 = fig.add_axes([left, bottom, width, height], label='flag')
 ax2.imshow(im)
 ax2.axis('off')
@@ -20,6 +30,13 @@ english_text = {'title': 'Choose what you want to do !',
                 'create': 'Create video',
                 'see_video': 'See your video',
                 'see_mondrian': 'See Mondrian video'}
+
+italian_text = {'title': '     Scegli cosa vuoi fare !',
+                'visit': 'Visita il Museo',
+                'draw': 'Disegna la tua opera',
+                'create': 'Crea il video',
+                'see_video': 'Guarda il tuo video',
+                'see_mondrian': 'Guarda il video di Mondian'}
 
 french_text = {'title': '         Choisis ton action !',
                'visit': 'Visite le Musée',
@@ -54,8 +71,10 @@ def select_language(event):
     y = event.ydata
     if ((x < 720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'english'
-    if ((x > 720) & (x < 1440) & (y < 453) & (event.inaxes.get_label() == 'flag')):
+    elif ((x > 720) & (x < 1440) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'french'
+    elif ((x > 720) & (x < 1440+720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
+        language = 'italian'
     if (event.inaxes.get_label() == 'flag'):
         change_language(language)
         plt.draw()
@@ -67,6 +86,8 @@ def change_language(language):
         text = french_text
     if language == 'english':
         text = english_text
+    if language == 'italian':
+        text = italian_text
 
     draw_button.label.set_text(text['draw'])
     visit_button.label.set_text(text['visit'])

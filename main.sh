@@ -3,7 +3,7 @@ max_pixels=1000
 #maximum number of pixels maximum size of the image.
 # If the original image is bigger, it will be reduced to this size. Default 1000
 
-=======
+# =======
 # First argument = name of the image
 # Second argument = number of frames for the video
 # third argument = frames per second for the video

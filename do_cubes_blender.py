@@ -18,8 +18,7 @@ import os
 import bpy
 import numpy as np
 import sys
-sys.path.insert(0,'./')
-
+sys.path.insert(0, './')
 from blender_utils import full_screen, starting_position
 
 ''' initialisation '''
@@ -29,6 +28,7 @@ max_pixels = int(sys.argv[nargv])
 # nb_frames = int(sys.argv[nargv-1])
 image_name = sys.argv[nargv-1]
 list_cubes = np.load("data/list_objects/list_cube_"+image_name+"-"+str(max_pixels)+".npy", allow_pickle=True)
+# list_cubes = np.load("data/list_objects/list_cube_double_persp.npy", allow_pickle=True)
 
 bpy.ops.render.render(write_still=True)
 
