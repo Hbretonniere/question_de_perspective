@@ -16,12 +16,12 @@ def starting_position():
 
     for a in bpy.context.screen.areas:
         if a.type == 'VIEW_3D':
-            a.spaces[0].region_3d.view_matrix[0] = [0.946, -0.2319, 0.0, -43.67]
-            a.spaces[0].region_3d.view_matrix[1] = [0.0296, -0.1, 0.99, 3.6]
-            a.spaces[0].region_3d.view_matrix[2] = [-0.27, 0.94, 0.091, -55]
-            a.spaces[0].region_3d.view_matrix[3] = [0, 0, 0, 1]
-            a.spaces[0].region_3d.view_rotation = [0.1, 0.08, -0.66, -0.72]
-            a.spaces[0].region_3d.view_distance = 70
+            # a.spaces[0].region_3d.view_matrix[0] = [-0.946, -0.2319, 0.0, -5.67]
+            # a.spaces[0].region_3d.view_matrix[1] = [0, 0, 0.99, 1.1]
+            # a.spaces[0].region_3d.view_matrix[2] = [-0.27, 0.94, 0., -34]
+            # a.spaces[0].region_3d.view_matrix[3] = [0., 0., 0., 1]
+            # a.spaces[0].region_3d.view_rotation = [0., 0., 0., 0.62]
+            # a.spaces[0].region_3d.view_distance = 0
             break
     c = {}
     c['area'] = a
