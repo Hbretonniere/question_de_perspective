@@ -29,24 +29,33 @@ english_text = {'title': 'Choose what you want to do !',
                 'draw': 'Draw your own art',
                 'create': 'Create video',
                 'see_video': 'See your video',
-                'see_mondrian': 'See Mondrian video'}
+                'see_mondrian': 'See Mondrian video',
+                'watch_video_warning': 'You need to create your video first !',
+                'create_video_warning': 'You need to create your art first !'}
 
-italian_text = {'title': '     Scegli cosa vuoi fare !',
+italian_text = {'title': 'Scegli cosa vuoi fare !',
                 'visit': 'Visita il Museo',
                 'draw': 'Disegna la tua opera',
                 'create': 'Crea il video',
                 'see_video': 'Guarda il tuo video',
-                'see_mondrian': 'Guarda il video di Mondian'}
+                'see_mondrian': 'Guarda il video di Mondian',
+                'watch_video_warning': 'You need to create your video first !',
+                'create_video_warning': 'You need to create your art first !'}
 
-french_text = {'title': '         Choisis ton action !',
+french_text = {'title': ' Choisis ton action !',
                'visit': 'Visite le Musée',
                'draw': "Dessine ta propre \n oeuvre d'art",
                'create': 'Crée ta video',
                'see_video': 'Regarde ta vidéo',
-               'see_mondrian': 'Regarde la vidéo Mondrian'}
+               'see_mondrian': 'Regarde la vidéo Mondrian',
+               'watch_video_warning': "Tu dois créer ta vidéo avant de la regarder !",
+               'create_video_warning': "Tu dois créer ton oeuvre d'art avant !"}
 
 text = english_text
 
+
+own_art = False
+create_vid = False
 fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
 
 visit_ax = plt.axes([0.05, 0.5, 0.4, 0.1])
@@ -82,6 +91,7 @@ def select_language(event):
 
 
 def change_language(language):
+    global text
     if language == 'french':
         text = french_text
     if language == 'english':
@@ -94,9 +104,9 @@ def change_language(language):
     video_button.label.set_text(text['see_video'])
     mondrian_button.label.set_text(text['see_mondrian'])
     create_vid_button.label.set_text(text['create'])
-    del fig.texts[0]
+    del fig.texts[:]
 
-    fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
+    fig.text(0.3, 0.8, text['title'], c='red', fontsize=15)
 
 
 fig.canvas.mpl_connect('button_press_event', select_language)
@@ -104,6 +114,10 @@ fig.canvas.mpl_connect('button_press_event', select_language)
 
 def pixel_art(_):
     os.system('python pixel_art.py')
+    if len(fig.texts) == 2:
+        del(fig.texts[1])
+    global own_art
+    own_art = True
 
 
 def visit(_):
@@ -111,20 +125,34 @@ def visit(_):
 
 
 def create_your_video(_):
-    # plt.text(1.5, 0.5, 'Wait for the rendering of the video, takes few minutes.', color='red')
-    plt.draw()
-    os.system('blender -b blender/museum.blend --python create_video.py -- custom_image 30 1000')
-    os.system('python do_video_python.py --image_name=custom_image --fps=10 --max_pixels=1000 --overwrite=True')
+    global create_vid
+    if own_art:
+        os.system('blender -b blender/museum.blend --python create_video.py -- custom_image 10 1000')
+        os.system('python do_video_python.py --image_name=custom_image --fps=10 --max_pixels=1000 --overwrite=True')
+        create_vid = True
+    else:
+
+        if len(fig.texts) == 2:
+            del(fig.texts[1])
+        fig.text(0.27, 0.7, text['create_video_warning'], color='red')
+        plt.draw()
 
 
 def read_video(_):
-    try:
-        os.system('open data/rendered/custom_image/*.mp4')
-    except Exception:
+    if not create_vid:
+        if len(fig.texts) == 2:
+            del fig.texts[1]
+        fig.text(0.25, 0.7, text['watch_video_warning'], color='red')
+        plt.draw()
+
+    else:
         try:
-            os.system('mpv -fs data/rendered/custom_image/*.mp4')
+            os.system('open data/rendered/custom_image/*.mp4')
         except Exception:
-            plt.text(0.9, 0.1, "Sorry, can't open the video on your OS")
+            try:
+                os.system('mpv -fs data/rendered/custom_image/*.mp4')
+            except Exception:
+                plt.text(0.9, 0.1, "Sorry, can't open the video on your OS")
 
 
 def read_mondrian(_):
