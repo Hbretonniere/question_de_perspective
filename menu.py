@@ -2,7 +2,7 @@ from matplotlib.widgets import Button
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
-
+import sys
 
 ''' 
 TO DOOOOOOO 
@@ -76,6 +76,7 @@ menu = visit_button, draw_button, create_vid_button, video_button, mondrian_butt
 
 
 def select_language(event):
+    global language
     x = event.xdata
     y = event.ydata
     if ((x < 720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
@@ -113,7 +114,7 @@ fig.canvas.mpl_connect('button_press_event', select_language)
 
 
 def pixel_art(_):
-    os.system('python pixel_art.py')
+    os.system(f'python pixel_art.py {language}')
     if len(fig.texts) == 2:
         del(fig.texts[1])
     global own_art

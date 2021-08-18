@@ -4,6 +4,22 @@ import numpy as np
 from PIL import Image
 import os
 from matplotlib.widgets import Button
+import sys
+
+english_texts = {'canevas': 'Left click to paint the pixel \n with the color selected on the Canvas.',
+                 'palette': 'Left click on the color to select it.',
+                 'save': 'Save the image',
+                 'see it': 'See it in \n the museum !'}
+
+french_texts = {'canevas': 'Clique gauche pour peindre le pixel \n du canevas avec la couleur sélectionnée.',
+                'palette': 'Clique gauche sur une \n couleur pour la selectionner',
+                'save': "Enregistre \n l'image",
+                'see it': 'Regarde le dans \n le musée !'}
+
+italian_texts = {'canevas': 'Left click to paint the pixel \n with the color selected on the Canvas.',
+                 'palette': 'Left click on the color to select it.',
+                 'save': 'Save the image',
+                 'see it': 'See it in \n the museum !'}
 
 
 class pixel_art:
@@ -11,19 +27,27 @@ class pixel_art:
         self,
         fig,
         gs,
+        language,
         size=15
     ):
+
+        if language == 'english':
+            texts = english_texts
+        elif language == 'french':
+            texts = french_texts
+        else:
+            texts = italian_texts
         self.size = size
 
         self.canevas = fig.add_subplot(gs[0])
-        self.canevas.set_title('Left click to paint the pixel \n with the color selected on the Canvas.', fontsize=10)
+        self.canevas.set_title(texts['canevas'], fontsize=10)
         self.canevas.set_xticks(np.arange(self.size))
         self.canevas.set_yticks(np.arange(self.size))
         self.canevas.set_xticklabels([""]*self.size)
         self.canevas.set_yticklabels([""]*self.size)
 
         self.show_palette = fig.add_subplot(gs[1])
-        self.show_palette.set_title('Left click on the color to select it.', fontsize=7)
+        self.show_palette.set_title(texts['palette'], fontsize=7)
         self.show_palette.set_xticks(np.arange(3))
         self.show_palette.set_yticks(np.arange(3))
         self.show_palette.set_xticklabels([""]*3)
@@ -46,8 +70,8 @@ class pixel_art:
 
         ax_save_button = plt.axes([0.7, 0.08, 0.25, 0.1])
         ax_launch_button = plt.axes([0.7, 0.2, 0.25, 0.1])
-        self.save_button = Button(ax_save_button, 'Save the image', color='gray', hovercolor='red')
-        self.launch_button = Button(ax_launch_button, 'See it in \n the museum !', color='gray', hovercolor='red')
+        self.save_button = Button(ax_save_button, texts['save'], color='gray', hovercolor='red')
+        self.launch_button = Button(ax_launch_button, texts['see it'], color='gray', hovercolor='red')
 
     def __call__(self, event):
         click_x = event.xdata
@@ -89,7 +113,8 @@ class pixel_art:
                 plt.draw()
 
 
+language = sys.argv[1]
 fig = plt.figure(figsize=(5, 5), constrained_layout=True)
 gs = fig.add_gridspec(ncols=2, nrows=1, width_ratios=[5, 3])
-pixel_art(fig, gs)
+pixel_art(fig, gs, language)
 plt.show()
