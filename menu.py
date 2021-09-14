@@ -79,11 +79,11 @@ def select_language(event):
     global language
     x = event.xdata
     y = event.ydata
-    if ((x < 720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
+    if ((x < 612) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'english'
-    elif ((x > 720) & (x < 1440) & (y < 453) & (event.inaxes.get_label() == 'flag')):
+    elif ((x > 612) & (x < 2*612) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'french'
-    elif ((x > 720) & (x < 1440+720) & (y < 453) & (event.inaxes.get_label() == 'flag')):
+    elif ((x > 2*612) & (x < 3*612) & (y < 453) & (event.inaxes.get_label() == 'flag')):
         language = 'italian'
     if (event.inaxes.get_label() == 'flag'):
         change_language(language)
