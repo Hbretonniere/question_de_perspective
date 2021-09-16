@@ -66,6 +66,7 @@ class pixel_art:
         self.canevas.grid()
         self.show_palette.imshow(self.palette, vmin=0, vmax=9, extent=[-1, 2, -1, 2], origin='lower')
         fig.canvas.mpl_connect('button_press_event', self)
+        fig.canvas.mpl_connect('motion_notify_event', self)
         self.couleur = 0
 
         ax_save_button = plt.axes([0.7, 0.08, 0.25, 0.1])
@@ -100,16 +101,17 @@ class pixel_art:
         self.save_button.on_clicked(save_drawing)
         self.launch_button.on_clicked(save_and_launch)
 
-        if event.button == 1:
-            if ax == self.show_palette:
-                self.couleur = self.palette[ceil(click_y), ceil(click_x)]
-                plt.suptitle(" ", x=0.5, y=0.9)
-
-            if ax == self.canevas:
+        if (ax == self.show_palette) & (event.button == 1):
+            self.couleur = self.palette[ceil(click_y), ceil(click_x)]
+            plt.suptitle(" ", x=0.5, y=0.9)
+        elif (ax == self.canevas) & (event.inaxes is not None):
+            if event.button == 1:
+                # click_x = event.xdata
+                # click_y = event.ydata
                 self.image[ceil(click_y), ceil(click_x)] = self.couleur
                 self.canevas.imshow(self.image, vmin=0, vmax=9,
                                     extent=[-1, self.size-1, -1, self.size-1], origin='lower')
-                plt.suptitle(" ", x=0.5, y=0.92)
+                # plt.suptitle(" ", x=0.5, y=0.92)
                 plt.draw()
 
 
