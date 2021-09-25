@@ -33,8 +33,7 @@ image_files = sort_nicely(glob.glob(frame_name+'*.png'))
 for i in range(2*fps):
     image_files.append(image_files[-1])
 nb_frames = len(image_files)
-video_name = 'data/rendered/'+image_name+'/'+image_name+'_'+\
-str(nb_frames)+'frames_'+'max_pixels'+str(max_pixels)+'_'+str(fps)+'fps.mp4'
+video_name = f"data/rendered/{image_name}/{image_name}_{str(nb_frames)}frames_max_pixels{str(max_pixels)}_{str(fps)}fps.mp4"
 if os.path.isfile(video_name) and not overwrite:
     print(video_name+' already there, and overwrite set to False. Skipping')
 else:

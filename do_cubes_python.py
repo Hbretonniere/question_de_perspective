@@ -195,5 +195,3 @@ parser.add_argument("--max_pixels", help="maximum number of pixels maximum size 
 args = parser.parse_args()
 make_list_cube(args.image_name, args.overwrite, args.max_pixels)
 
-
-# make_list_cube_3D(['custom_image1', 'custom_image2'], )

@@ -19,10 +19,10 @@ def sort_nicely(liste):
     liste.sort(key=alphanum_key)
     return liste
 
+
 if os.path.isfile('data/rendered/'+image_name+'/'+image_name+'_video.mp4'):
     print('data/rendered/'+image_name+'/'+image_name+'_video.mp4 already there, skipping')
 else:
     image_files = [img for img in sort_nicely(glob.glob('data/rendered/'+image_name+'/'+image_name+'*.png'))]
     clip = moviepy.video.io.ImageSequenceClip.ImageSequenceClip(image_files, fps=fps)
     clip.write_videofile('data/rendered/'+image_name+'/'+image_name+'_video.mp4')
-# --image_name
