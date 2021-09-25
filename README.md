@@ -22,9 +22,8 @@ You can also create your own pixel art using the following command at the root o
 
 It will create a a blanck pixel art canvas, along with a color palette. You can now click on the color palette, and then 
 paint it in the canvas !
-When you're happy with your masterpiece, you can right click (or ctrl click) to save it, and even directly launch the rendering of the animation by double clicking.
 
-PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT AN EXAMPLE AND THE DEPENDENCIES!
+PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT THE DEPENDENCIES!
 # Dependencies
 To be sure to have all the dependencies, you can create a conda environment using :
 
@@ -35,25 +34,8 @@ manually.
 
 You also need to install Blender : https://www.blender.org/download/
 
-# Run an example
-To run the program, do :
+# Usage
 
-`sh main.sh image nb_frames fps`
+Just run "python menu.py" in the root of the project, and follow the instructions !
 
-where :
-
-image = file name of the image you want to put in perspective (for example smiley). It will search for original picture in data/images and search for image.png
-
-`sh main.sh img nb_frames fps`
-
-img = file name of the image you want to put in perspective (for example smiley). It will search for original picture in data/images and search as image.png
-
-
-nb_frames = number of frames you want to render (for example 20)
-
-
-fps = frame per second for the video (for example 10)
-
-try it with the example : run 
-`sh main.sh smiley 20 10`
-at the root of the project
+Enjoy !
