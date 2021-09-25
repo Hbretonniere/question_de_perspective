@@ -106,12 +106,9 @@ class pixel_art:
             plt.suptitle(" ", x=0.5, y=0.9)
         elif (ax == self.canevas) & (event.inaxes is not None):
             if event.button == 1:
-                # click_x = event.xdata
-                # click_y = event.ydata
                 self.image[ceil(click_y), ceil(click_x)] = self.couleur
                 self.canevas.imshow(self.image, vmin=0, vmax=9,
                                     extent=[-1, self.size-1, -1, self.size-1], origin='lower')
-                # plt.suptitle(" ", x=0.5, y=0.92)
                 plt.draw()
 
 
