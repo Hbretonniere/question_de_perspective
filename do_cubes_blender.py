@@ -46,18 +46,27 @@ creating a new blender material
 To do : re-use a material if the color has been already seen'''
 #  +38
 
+colors = []
+cube_mats = []
 for i in range(2, list_cubes.shape[0]):
     bpy.ops.mesh.primitive_cube_add(size=float(list_cubes[i][3])/reduce,
-                                    location=(float(list_cubes[i][1])/reduce,
-                                    float(list_cubes[i][2])/reduce,
+                                    location=(float(list_cubes[i][1])/reduce + 40,
+                                    float(list_cubes[i][2])/reduce - 80,
                                     float(list_cubes[i][0])/reduce))
 
     cube_i = bpy.context.selected_objects[0]
     cube_i.name = 'cube_{}'.format(i)
     color = tuple(reversed(tuple(list_cubes[i][4]/255)))+(1,)
-    cube_mat = bpy.data.materials.new("RGB")
-    cube_mat.diffuse_color = color
-    cube_mat.roughness = 1  # make the material less shiny
+    if color in colors:
+        index = colors.index(color)
+        cube_mat = cube_mats[index]
+    else:
+        colors.append(color)
+        cube_mat = bpy.data.materials.new("RGB")
+        cube_mat.diffuse_color = color
+        cube_mat.roughness = 1  # make the material less shiny
+        cube_mats.append(cube_mat)
+
     cube_i.data.materials.append(cube_mat)
 
 context = bpy.context.copy()
