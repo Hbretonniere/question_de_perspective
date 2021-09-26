@@ -33,4 +33,6 @@ To be sure to have all the dependencies, you can create a conda environment usin
 Otherwise, the project doesn't require too much libraries, and they are all quite common. You can easily pip install them
 manually.
 
-You also need to install Blender : https://www.blender.org/download/
+```diff
+- You also need to install Blender : https://www.blender.org/download/
+```
