@@ -11,17 +11,18 @@ The project will decompose each pixel to a cube and create this random looking d
 
 ![perspective](./data/for_readme/perspective_mondrian.png)
 
-But as the camera rotates around the cubes, the illusion slowly disappear : when it comes to the perfect point, represented
-as a black ring, al the cubes get perfectly aligned and reveal the input image :
+But as you moves around the cubes, the illusion slowly disappear : when it comes to the perfect point, represented
+as a black ring, all the cubes get perfectly aligned and reveal the image :
 
 ![gif](./data/for_readme/gif_mondrian.gif)
 
-You can also create your own pixel art using the following command at the root of the project :
+You can also draw you own pixel art masterpiece and automaticaly "perspective" it to the museum !
 
-`ipython pixel_art.py` 
+```diff
+- Just follow the instructions of the menu, by launching "python menu.py"
+```
 
-It will create a a blanck pixel art canvas, along with a color palette. You can now click on the color palette, and then 
-paint it in the canvas !
+
 
 PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT THE DEPENDENCIES!
 # Dependencies
@@ -33,9 +34,3 @@ Otherwise, the project doesn't require too much libraries, and they are all quit
 manually.
 
 You also need to install Blender : https://www.blender.org/download/
-
-# Usage
-
-Just run "python menu.py" in the root of the project, and follow the instructions !
-
-Enjoy !
