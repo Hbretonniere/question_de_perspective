@@ -23,16 +23,20 @@ You can also draw you own pixel art masterpiece and automaticaly "perspective" i
 ```
 
 
-
+'''diff
 PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT THE DEPENDENCIES!
+'''
 # Dependencies
 To be sure to have all the dependencies, you can create a conda environment using :
 
 `conda env create -f env.yml`
+ 
+ And then do `conda activate perspective`
 
-Otherwise, the project doesn't require too much libraries, and they are all quite common. You can easily pip install them
+Otherwise, the project doesn't require much libraries, and they are all quite common. You can easily pip install them
 manually.
 
 ```diff
-- You also need to install Blender : https://www.blender.org/download/
+- You also need to install Blender :
 ```
+https://www.blender.org/download/
