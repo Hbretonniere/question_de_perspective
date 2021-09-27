@@ -24,7 +24,7 @@ You can also draw you own pixel art masterpiece and automaticaly "perspective" i
 
 
 ```diff
-PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT THE DEPENDENCIES!
+- PLEASE READ THE NEXT OF THE README FOR MORE INFO ABOUT THE DEPENDENCIES!
 ```
 # Dependencies
 To be sure to have all the dependencies, you can create a conda environment using :
