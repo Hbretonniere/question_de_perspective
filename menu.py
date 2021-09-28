@@ -157,12 +157,10 @@ def read_video(_):
 
 
 def read_mondrian(_):
-    try:
-        os.system('open data/rendered/mondrian/*.mp4')
-    except Exception:
-        try:
-            os.system('mpv -fs data/rendered/mondrian/*.mp4')
-        except Exception:
+    open_exit = os.system('open data/rendered/mondrian/*.mp4')
+    if open_exit != 0:
+        open_exit = os.system('mpv -fs data/rendered/mondrian/*.mp4')
+        if open_exit != 0:
             plt.text(0.9, 0.1, "Sorry, can't open the video on your OS")
 
 
