@@ -2,7 +2,8 @@ from matplotlib.widgets import Button
 import matplotlib.pyplot as plt
 import os
 from PIL import Image
-import sys
+import glob
+
 
 ''' 
 TO DOOOOOOO 
@@ -31,7 +32,8 @@ english_text = {'title': 'Choose what you want to do !',
                 'see_video': 'See your video',
                 'see_mondrian': 'See Mondrian video',
                 'watch_video_warning': 'You need to create your video first !',
-                'create_video_warning': 'You need to create your art first !'}
+                'create_video_warning': 'You need to create your art first !',
+                'cant_open': 'Sorry, I cannot open the video...'}
 
 italian_text = {'title': 'Scegli cosa vuoi fare !',
                 'visit': 'Visita il Museo',
@@ -40,7 +42,8 @@ italian_text = {'title': 'Scegli cosa vuoi fare !',
                 'see_video': 'Guarda il tuo video',
                 'see_mondrian': 'Guarda il video di Mondian',
                 'watch_video_warning': 'You need to create your video first !',
-                'create_video_warning': 'You need to create your art first !'}
+                'create_video_warning': 'You need to create your art first !',
+                'cant_open': 'Sorry, I cannot opne the video...'}
 
 french_text = {'title': ' Choisis ton action !',
                'visit': 'Visite le Musée',
@@ -49,7 +52,8 @@ french_text = {'title': ' Choisis ton action !',
                'see_video': 'Regarde ta vidéo',
                'see_mondrian': 'Regarde la vidéo Mondrian',
                'watch_video_warning': "Tu dois créer ta vidéo avant de la regarder !",
-               'create_video_warning': "Tu dois créer ton oeuvre d'art avant !"}
+               'create_video_warning': "Tu dois créer ton oeuvre d'art avant !",
+               'cant_open': 'Désolé, je ne peux pas ouvrir la vidéo...'}
 
 text = english_text
 
@@ -147,21 +151,30 @@ def read_video(_):
         plt.draw()
 
     else:
-        try:
-            os.system('open data/rendered/custom_image/*.mp4')
-        except Exception:
-            try:
-                os.system('mpv -fs data/rendered/custom_image/*.mp4')
-            except Exception:
-                plt.text(0.9, 0.1, "Sorry, can't open the video on your OS")
+        name = glob.glob('data/rendered/custom_image/*.mp4')[0]
+        print(name)
+        open_exit = os.system('open ' + name)
+
+        if open_exit != 0:
+            open_exit = os.system('mpv -fs ' + name)
+            if open_exit != 0:
+                open_exit = os.system('vlc ' + name)
+                if open_exit != 0:
+                    plt.text(-0.9, 6, text["cant_open"], color='red')
+                    plt.draw()
 
 
 def read_mondrian(_):
-    open_exit = os.system('open data/rendered/mondrian/*.mp4')
+    name = glob.glob('data/rendered/mondrian/*.mp4')[0]
+    print(name)
+    open_exit = os.system('open ' + name)
     if open_exit != 0:
-        open_exit = os.system('mpv -fs data/rendered/mondrian/*.mp4')
+        open_exit = os.system('mpv -fs ' + name)
         if open_exit != 0:
-            plt.text(0.9, 0.1, "Sorry, can't open the video on your OS")
+            open_exit = os.system('vlc ' + name)
+            if open_exit != 0:
+                plt.text(-0.9, 6, text["cant_open"], color='red')
+                plt.draw()
 
 
 draw_button.on_clicked(pixel_art)
