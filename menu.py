@@ -14,6 +14,8 @@ TO DOOOOOOO
 https://www.youtube.com/watch?v=SKfpYVK_r0E
 '''
 
+os.system('chmod 0444 blender/museum.blend')
+
 fig, ax = plt.subplots(figsize=(5, 5), constrained_layout=True)
 plt.axis('off')
 language = 'english'
@@ -76,6 +78,7 @@ video_button = Button(video_ax, text['see_video'], color='gray', hovercolor='Blu
 
 mondrian_ax = plt.axes([0.55, 0.1, 0.4, 0.1])
 mondrian_button = Button(mondrian_ax, text['see_mondrian'], color='gray', hovercolor='Blue')
+
 menu = visit_button, draw_button, create_vid_button, video_button, mondrian_button
 
 
@@ -109,6 +112,7 @@ def change_language(language):
     video_button.label.set_text(text['see_video'])
     mondrian_button.label.set_text(text['see_mondrian'])
     create_vid_button.label.set_text(text['create'])
+    reset_button.label.set_text(text['reset'])
     del fig.texts[:]
 
     fig.text(0.3, 0.8, text['title'], c='red', fontsize=15)
