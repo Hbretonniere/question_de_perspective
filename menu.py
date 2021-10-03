@@ -112,7 +112,7 @@ def change_language(language):
     video_button.label.set_text(text['see_video'])
     mondrian_button.label.set_text(text['see_mondrian'])
     create_vid_button.label.set_text(text['create'])
-    reset_button.label.set_text(text['reset'])
+    # reset_button.label.set_text(text['reset'])
     del fig.texts[:]
 
     fig.text(0.3, 0.8, text['title'], c='red', fontsize=15)
