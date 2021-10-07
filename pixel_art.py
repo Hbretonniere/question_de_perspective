@@ -55,24 +55,26 @@ class pixel_art:
 
         self.image = np.zeros((self.size, self.size, 3)) + (255, 255, 255)
         self.image = self.image.astype(np.uint8)
-        self.palette = np.asarray([[255, 0, 0], [0, 255, 0], [0, 0, 255],
-                                  [253, 173, 11], [125, 28, 187], [100, 100, 100],
-                                  [233, 249, 35], [0, 0, 0], [255, 255, 255]])
-        self.palette = self.palette.reshape(3, 3, 3)
+        self.palette = np.asarray([[255, 0, 0], [230, 230, 230], [36, 49, 99],
+                                  [253, 173, 11], [169, 114, 44], [100, 100, 100],
+                                  [240, 206, 40], [0, 0, 0], [255, 255, 255],
+                                  [169, 222, 251], [80, 117, 150], [200, 200, 200]])
+        self.palette = self.palette.reshape(4, 3, 3)
 
 #         self.cmap = mpl.colors.ListedColormap(['white', 'red', 'green', 'blue', 'cyan', 'orange', 'black', 'purple', 'yellow'])
         self.canevas.set_aspect('equal')
         self.canevas.imshow(self.image, vmin=0, vmax=9, extent=[-1, self.size-1, -1, self.size-1], origin='lower')
         self.canevas.grid()
-        self.show_palette.imshow(self.palette, vmin=0, vmax=9, extent=[-1, 2, -1, 2], origin='lower')
+        self.show_palette.imshow(self.palette, vmin=0, vmax=9, extent=[-1, 2, -1, 3], origin='lower')
         fig.canvas.mpl_connect('button_press_event', self)
         fig.canvas.mpl_connect('motion_notify_event', self)
         self.couleur = 0
 
-        ax_save_button = plt.axes([0.7, 0.08, 0.25, 0.1])
-        ax_launch_button = plt.axes([0.7, 0.2, 0.25, 0.1])
+        ax_save_button = plt.axes([0.7, 0.01, 0.25, 0.1])
+        ax_launch_button = plt.axes([0.7, 0.12, 0.25, 0.1])
         self.save_button = Button(ax_save_button, texts['save'], color='gray', hovercolor='red')
         self.launch_button = Button(ax_launch_button, texts['see it'], color='gray', hovercolor='red')
+        # self.image = np.flip(np.load('./data/images/custom_image.npy'), axis=0)
 
     def __call__(self, event):
         click_x = event.xdata
