@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import os
 from PIL import Image
 import glob
-
+import numpy as np
 
 ''' 
 TO DOOOOOOO 
@@ -35,7 +35,8 @@ english_text = {'title': 'Choose what you want to do !',
                 'see_mondrian': 'See Mondrian video',
                 'watch_video_warning': 'You need to create your video first !',
                 'create_video_warning': 'You need to create your art first !',
-                'cant_open': 'Sorry, I cannot open the video...'}
+                'cant_open': 'Sorry, I cannot open the video...',
+                'help': 'If you want an easy navigation on the museum \n press "tab" inside the museum'}
 
 italian_text = {'title': 'Scegli cosa vuoi fare !',
                 'visit': 'Visita il Museo',
@@ -45,7 +46,8 @@ italian_text = {'title': 'Scegli cosa vuoi fare !',
                 'see_mondrian': 'Guarda il video di Mondian',
                 'watch_video_warning': 'You need to create your video first !',
                 'create_video_warning': 'You need to create your art first !',
-                'cant_open': 'Sorry, I cannot opne the video...'}
+                'cant_open': 'Sorry, I cannot opne the video...',
+                'help': 'If you want an easy navigation on the museum \n press "tab" inside the museum'}
 
 french_text = {'title': ' Choisis ton action !',
                'visit': 'Visite le Musée',
@@ -55,7 +57,8 @@ french_text = {'title': ' Choisis ton action !',
                'see_mondrian': 'Regarde la vidéo Mondrian',
                'watch_video_warning': "Tu dois créer ta vidéo avant de la regarder !",
                'create_video_warning': "Tu dois créer ton oeuvre d'art avant !",
-               'cant_open': 'Désolé, je ne peux pas ouvrir la vidéo...'}
+               'cant_open': 'Désolé, je ne peux pas ouvrir la vidéo...',
+               'help': 'Si tu veux naviguer facilement dans le musée \n appuie sur "tab" dans le musée'}
 
 text = english_text
 
@@ -63,6 +66,7 @@ text = english_text
 own_art = False
 create_vid = False
 fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
+fig.text(0.1, 0.7, text['help'], c='red', fontsize=10)
 
 visit_ax = plt.axes([0.05, 0.5, 0.4, 0.1])
 visit_button = Button(visit_ax, text['visit'], color='gray', hovercolor='red')
@@ -80,6 +84,19 @@ mondrian_ax = plt.axes([0.55, 0.1, 0.4, 0.1])
 mondrian_button = Button(mondrian_ax, text['see_mondrian'], color='gray', hovercolor='Blue')
 
 menu = visit_button, draw_button, create_vid_button, video_button, mondrian_button
+
+
+def select_color(event):
+    each = 5
+    c = np.linspace(20, 200, each)
+    plt.figure()
+    colors = []
+    for r in c:
+        for g in c:
+            for b in c:
+                colors.append([r, g, b])
+    
+    plt.imshow()
 
 
 def select_language(event):
@@ -115,7 +132,8 @@ def change_language(language):
     # reset_button.label.set_text(text['reset'])
     del fig.texts[:]
 
-    fig.text(0.3, 0.8, text['title'], c='red', fontsize=15)
+    fig.text(0.18, 0.8, text['title'], c='red', fontsize=15)
+    fig.text(0.1, 0.7, text['help'], c='red', fontsize=10)
 
 
 fig.canvas.mpl_connect('button_press_event', select_language)
